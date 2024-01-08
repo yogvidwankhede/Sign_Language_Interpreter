@@ -1,0 +1,1 @@
+This directory will contain all the actions that you will train. Each action will have an individual directory, which conatins a pickle file. These files have pose estimates of the action.
