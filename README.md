@@ -85,8 +85,6 @@ We set all the places to zero in the event that there is no hand.
 
 ---
 
----
-
 ## Attribution
 
 The recognition pipeline (hand-angle `HandModel`, `SignModel`, DTW distances, reference-video dataset loading and the
