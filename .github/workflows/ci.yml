@@ -1,0 +1,18 @@
+name: CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      # The pinned mediapipe 0.8.7.3 has no wheel for this Python, so CI only checks that every file compiles.
+      - run: python -m compileall -q .
+      - run: pip install pyyaml
+      - run: python -c "import yaml; yaml.safe_load(open('CITATION.cff'))"
