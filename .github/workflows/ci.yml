@@ -12,7 +12,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      # The pinned mediapipe 0.8.7.3 has no wheel for this Python, so CI only checks that every file compiles.
+      # The pinned mediapipe 0.8.7.3 has no wheel for this Python, so the tests run against a stub of mediapipe and cv2.
       - run: python -m compileall -q .
+      - run: pip install numpy pandas fastdtw pytest
+      - run: python -m pytest -q tests
       - run: pip install pyyaml
       - run: python -c "import yaml; yaml.safe_load(open('CITATION.cff'))"

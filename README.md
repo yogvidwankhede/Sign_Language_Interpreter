@@ -21,6 +21,9 @@ upstream and what was changed here.
 
 - pip install -r requirements.txt
 
+The last two requirements are only used by `utils/sentence.py`. It also needs the spaCy English model
+(`python -m spacy download en_core_web_sm`). The pinned versions are from 2021 and may not install on a current Python.
+
 ### 3. Import Videos of Signs for Reference
 
 The structure of the videos/ folder should be as follows:
@@ -62,7 +65,7 @@ As of right now, the implementation just predicts the sign using the Hand model.
 ### Hand Model
 
 - To specify the hand gesture at each frame, a HandModel has been constructed for this project. 
-We set all the places to zero in the event that there is no hand.
+Landmarks are set to zero when a hand is not detected, and `SignModel` then skips those frames.
 
 - The *feature vector of the HandModel is a list of the angles between each hand's connexions in order to be *invariant to orientation and scale.
 
@@ -77,6 +80,8 @@ We set all the places to zero in the event that there is no hand.
 - The HandModels of the left and right hands for each frame when recording are stored by the SignRecorder class.
 - After recording is complete, it calculates the DTW for both the recorded sign and each of the dataset's reference signs.
 - In order to produce a result only if the forecast confidence is higher than a threshold, a voting mechanism is finally introduced.
+  In this repository the defaults are `batch_size=1, threshold=0.8`, which is plain nearest-neighbour matching. The paper
+  describes `batch_size=2`, and upstream uses `batch_size=5, threshold=0.5`.
 
 ### Dynamic Time Warping
 
@@ -124,3 +129,13 @@ Citation metadata is in [CITATION.cff](CITATION.cff).
   maintained.
 - No test set, signer-independent evaluation or accuracy script is included, so the paper's reported accuracy cannot be
   reproduced from this repository.
+
+## Tests
+
+```
+pip install numpy pandas fastdtw pytest
+python -m pytest -q tests
+```
+
+The tests stub `mediapipe` and `cv2` when they are not installed. They cover DTW ranking, the different-hands rule and
+the voting defaults. They do not cover landmark extraction or the webcam loop.
