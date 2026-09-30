@@ -1,0 +1,46 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper below and the upstream project it is based on."
+title: "Sign_Language_Interpreter"
+type: software
+authors:
+  - family-names: "Mankar"
+    given-names: "Yash"
+  - family-names: "Wankhede"
+    given-names: "Yogvid"
+  - family-names: "Thune"
+    given-names: "Vedanshu"
+  - family-names: "Khawshe"
+    given-names: "Shrikant"
+  - family-names: "Sahu"
+    given-names: "Madhuri"
+repository-code: "https://github.com/yogvidwankhede/Sign_Language_Interpreter"
+license: MIT
+preferred-citation:
+  type: conference-paper
+  title: "Real-Time Sign Language Interpreter Using MediaPipe, Dynamic Time Warping, and NLP"
+  authors:
+    - family-names: "Mankar"
+      given-names: "Yash"
+    - family-names: "Wankhede"
+      given-names: "Yogvid"
+    - family-names: "Thune"
+      given-names: "Vedanshu"
+    - family-names: "Khawshe"
+      given-names: "Shrikant"
+    - family-names: "Sahu"
+      given-names: "Madhuri"
+  collection-title: "Multi-Strategy Learning Environment (ICMSLE 2024)"
+  collection-type: proceedings
+  publisher:
+    name: "Springer"
+  pages: 87-98
+  year: 2024
+  doi: "10.1007/978-981-97-1488-9_7"
+references:
+  - type: software
+    title: "Sign-Language-Recognition--MediaPipe-DTW"
+    authors:
+      - alias: "gabguerin"
+    repository-code: "https://github.com/gabguerin/Sign-Language-Recognition--MediaPipe-DTW"
+    license: MIT
+    year: 2022

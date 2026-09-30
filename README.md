@@ -1,7 +1,13 @@
 # Sign Language Recognition - utilizing MediaPipe and DTW
 
 
-This repository provides an implementation of a Sign Recognition Model using the MediaPipe library for landmark extraction and Dynamic Time Warping (DTW) as a similarity metric between signs.
+This repository is a modified fork-style copy of
+[gabguerin/Sign-Language-Recognition--MediaPipe-DTW](https://github.com/gabguerin/Sign-Language-Recognition--MediaPipe-DTW)
+(MIT License, Copyright (c) 2022 gabguerin), which in turn is based on the
+[Sicara blog post "Sign language recognition using MediaPipe"](https://www.theodo.com/blog/sign-language-recognition-using-mediapipe).
+It recognises isolated signs from MediaPipe hand landmarks, using Dynamic Time Warping (DTW) as the similarity
+measure between a recorded sign and reference videos. See [Attribution](#attribution) for what comes from
+upstream and what was changed here.
 
 ![](Demo1.mp4)
 
@@ -78,3 +84,45 @@ We set all the places to zero in the event that there is no hand.
 - We calculate the hand connection angle variation's DTW over time.
 
 ---
+
+---
+
+## Attribution
+
+The recognition pipeline (hand-angle `HandModel`, `SignModel`, DTW distances, reference-video dataset loading and the
+webcam loop) comes from the upstream repository above, which is MIT licensed. The upstream copyright and permission
+notice is kept in [LICENSE](LICENSE), as the MIT License requires.
+
+Comparison against upstream at commit `68948d8`:
+
+| File | Status |
+|---|---|
+| `models/hand_model.py`, `models/sign_model.py`, `utils/dataset_utils.py` | Identical to upstream |
+| `webcam_manager.py`, `utils/mediapipe_utils.py` | Identical to upstream |
+| `utils/dtw.py`, `utils/landmark_utils.py`, `yt_download.py` | Upstream code; only docstrings removed |
+| `sign_recorder.py` | Upstream code; docstrings removed; voting defaults changed from `batch_size=5, threshold=0.5` to `batch_size=1, threshold=0.8`; "unknown" message changed to English |
+| `main.py` | Upstream loop plus a call to the sentence step below |
+| `utils/convList.py`, `utils/sentence.py` | Added here |
+| `yt_links_ind.csv`, demo videos, `Documents/` | Added here |
+
+What was added here is a keyword lookup, not sentence generation: `utils/sentence.py` checks whether the recognised
+words all appear in one of eight hard-coded English sentences, otherwise joins the words, and speaks the result with
+`pyttsx3`. The system recognises isolated signs from a small reference set; it does not interpret or translate a sign
+language.
+
+## Publication
+
+Mankar Y., Wankhede Y., Thune V., Khawshe S., Sahu M. (2024). Real-Time Sign Language Interpreter Using MediaPipe,
+Dynamic Time Warping, and NLP. In: *Multi-Strategy Learning Environment* (ICMSLE 2024), Algorithms for Intelligent
+Systems, Springer, pp. 87-98. https://doi.org/10.1007/978-981-97-1488-9_7
+
+Citation metadata is in [CITATION.cff](CITATION.cff).
+
+## Known limitations
+
+- The reference videos were downloaded from YouTube through `yt_download.py`. The repository does not include them,
+  and their licences and the signers' consent have not been checked. Do not redistribute them.
+- Dependencies are pinned to 2021-era versions (`mediapipe==0.8.7.3`, `pytube==11.0.1`). `pytube` is no longer
+  maintained.
+- No test set, signer-independent evaluation or accuracy script is included, so the paper's reported accuracy cannot be
+  reproduced from this repository.
