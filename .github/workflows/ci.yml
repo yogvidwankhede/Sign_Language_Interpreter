@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
       # The pinned mediapipe 0.8.7.3 has no wheel for this Python, so the tests run against a stub of mediapipe and cv2.
