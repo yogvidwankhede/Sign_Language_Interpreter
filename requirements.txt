@@ -4,7 +4,7 @@ numpy
 opencv-contrib-python==4.5.4.60
 opencv-python==4.5.3.56
 pandas==1.3.2
-pytube==11.0.1
+pytube==15.0.0
 tqdm
 # Imported by utils/sentence.py but missing from the original list; versions not yet tested.
 spacy
